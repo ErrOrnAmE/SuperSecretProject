@@ -3,10 +3,10 @@
 
 tablier = [[1,2,3],[4,5,6],[7,8,9]]
 
-tablock = [[0,1,0,0],[0,-1,0,0],[0,0,0,0],[0,0,0,0]]
+tablock = [[0,0,0,0],[0,0,0,0],[1,0,1,0],[-1,0,0,0]]
 
-largeur = 3
-hauteur = 3
+largeur = len(tablier[0])
+hauteur = len(tablier)
 
 class IA(object):
 
@@ -15,7 +15,7 @@ class IA(object):
 		self.tablock = tablock;
 
 	def createMap(self):
-		self.lock = Lock(self.tablier,self.tablock,0,1)
+		self.lock = Lock(self.tablier,self.tablock,1,3)
 
 
 
@@ -33,26 +33,29 @@ class Lock(object):
 			return
 
 		if (x > 0 and y > 0 and x < largeur and y < hauteur):
+
+			print("au milieu")
+
 			conteneurs = tablier[y-1:y+1]
 			for index in range(len(conteneurs)):
 				conteneurs[index] = conteneurs[index][x-1:x+1]
 
-			print(conteneurs)
+			#print(conteneurs)
 
 			locks = tablock[y-1:y+2]
 			for index in range(len(locks)):
 				locks[index] = locks[index][x-1:x+2]
 
-			#print(conteneurs)
-
 			avant = self.nbPointsLock(conteneurs,locks)
 			locks[1][1] = 1
-			#print(locks)
 			apres = self.nbPointsLock(conteneurs,locks)
 
-			#print("nous: "+str(apres[0]-avant[0])+" eux:"+str(apres[1]-avant[1]) )
 			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
+
 		elif (x == 0 and y == 0):
+
+			print("en haut à gauche")
+
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
 				minilocks[index] = minilocks[index][0:2]
@@ -66,46 +69,139 @@ class Lock(object):
 				self.diff = tablier[0][0]
 			else:
 				self.diff = 0
-		elif (x == 0):
-			minilocks = tablock[y-1:y+3]
+
+		elif (x == largeur and y == 0):
+
+			print ("en haut à droite")
+
+			minilocks = tablock[0:2]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][x-1:]
+
+			print(minilocks)
+
+			euxLocks = self.nbLocks(minilocks,-1)
+			nousLocks = self.nbLocks(minilocks,1)
+
+			if (euxLocks == nousLocks or euxLocks == nousLocks + 1):
+				self.diff = tablier[y][x-1]
+			else:
+				self.diff = 0
+
+		elif (x == 0 and y == hauteur):
+
+			print ("en bas à gauche")
+
+			minilocks = tablock[y-1:]
 			for index in range(len(minilocks)):
 				minilocks[index] = minilocks[index][0:2]
 
-			eux = 0
-			nous = 0
+			euxLocks = self.nbLocks(minilocks,-1)
+			nousLocks = self.nbLocks(minilocks,1)
 
-			euxLocksHaut = self.nbLocks(minilocks[0:2],-1)
-			nousLocksHaut = self.nbLocks(minilocks[0:2],1)
+			if (euxLocks == nousLocks or euxLocks == nousLocks + 1):
+				self.diff = tablier[y-1][x]
+			else:
+				self.diff = 0
 
-			euxLocksBas = self.nbLocks(minilocks[1:3],-1)
-			nousLocksHaut = self.nbLocks(minilocks[1:3],1)
+		elif (x == largeur and y == hauteur):
 
-			if (euxLocksHaut > nousLocksHaut):
-				eux = tablier[y][x]
-			elif (nousLocksHaut > euxLocksHaut):
-				nous = tablier[y][x]
+			print ("en bas à droite")
 
-			avant = (nous,eux)
-			eux = 0
-			nous = 0
+			minilocks = tablock[y-1:]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][x-1:]
 
-			minilocks[1][0] = 1
+			euxLocks = self.nbLocks(minilocks,-1)
+			nousLocks = self.nbLocks(minilocks,1)
 
-			euxLocksHaut = self.nbLocks(minilocks[0:2],-1)
-			nousLocksHaut = self.nbLocks(minilocks[0:2],1)
+			if (euxLocks == nousLocks or euxLocks == nousLocks + 1):
+				self.diff = tablier[y-1][x-1]
+			else:
+				self.diff = 0
 
-			euxLocksBas = self.nbLocks(minilocks[1:3],-1)
-			nousLocksHaut = self.nbLocks(minilocks[1:3],1)
+		elif (x == 0):
 
-			if (euxLocksHaut > nousLocksHaut):
-				eux = eux + tablier[y][x]
-			elif (nousLocksHaut > euxLocksHaut):
-				nous = nous + tablier[y][x]
+			print("à gauche")
 
-			apres = (nous,eux)
+			minilocks = tablock[y-1:y+2]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][0:2]
+
+			c = [ [tablier[y-1][x]], [tablier[y][x]] ]
+
+			#print(self.nbPointsLock(c,minilocks))
+			avant = self.nbPointsLock(c,minilocks)
+
+			minilocks[y][x] = 1
+
+			#print(self.nbPointsLock(c,minilocks))
+			apres = self.nbPointsLock(c,minilocks)
+		
+			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
+
+		elif (y == 0):
+
+			print("en haut")
+
+			minilocks = tablock[0:2]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][x-1:x+2]
+
+			c = [ [tablier[y][x-1], tablier[y][x]] ]
+
+			avant = self.nbPointsLock(c,minilocks)
+
+			minilocks[y][x] = 1
+
+			apres = self.nbPointsLock(c,minilocks)
 
 			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
-		
+
+		elif (x == largeur):
+
+			print("à droite")
+
+			minilocks = tablock[y-1:y+2]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][x-1:]
+
+			c = [ [tablier[y-1][x-1]], [tablier[y][x-1]] ]
+
+			avant = self.nbPointsLock(c,minilocks)
+			#print(avant)
+
+			minilocks[1][1] = 1
+
+			apres = self.nbPointsLock(c,minilocks)
+			#print(apres)
+
+			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
+
+		elif (y == hauteur):
+
+			print("en bas")
+
+			minilocks = tablock[y-1:]
+			for index in range(len(minilocks)):
+				minilocks[index] = minilocks[index][x-1:x+2]
+
+			c = [ [tablier[y-1][x-1],tablier[y-1][x]] ]
+
+			#print (minilocks)
+			#print (c)
+
+			avant = self.nbPointsLock(c,minilocks)
+			#print(avant)
+
+			minilocks[1][1] = 1
+
+			apres = self.nbPointsLock(c,minilocks)
+			#print(apres)
+
+			#print((apres[0]-avant[0])-(apres[1]-avant[1]))
+
+			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
 
 		print(str(x)+":"+str(y)+" > "+str(self.diff))
 
@@ -113,13 +209,39 @@ class Lock(object):
 		nous = 0
 		eux = 0
 		for y in range(len(conteneurs)):
+			'''if (isinstance(conteneurs[y],int)):
+				minilocks = locks[y:y+2]
+				for index in range(len(minilocks)):
+					minilocks[index] = minilocks[index][0:2]
+
+				print()
+				print(minilocks)
+
+				euxLocks = self.nbLocks(minilocks,-1)
+				nousLocks = self.nbLocks(minilocks,1)
+
+				print("x: "+str(0)+" y: "+str(y)+" > "+str(nousLocks)+"/"+str(euxLocks))
+
+				if (euxLocks > nousLocks):
+					eux = eux + conteneurs[y]
+				elif (nousLocks > euxLocks):
+					nous = nous + conteneurs[y]
+
+				print(nous,eux)
+			else:'''
+
 			for x in range(len(conteneurs[y])):
 				minilocks = locks[y:y+2]
 				for index in range(len(minilocks)):
 					minilocks[index] = minilocks[index][x:x+2]
 
+				'''print()
+				print(minilocks)'''
+
 				euxLocks = self.nbLocks(minilocks,-1)
 				nousLocks = self.nbLocks(minilocks,1)
+
+				#print("x: "+str(x)+" y: "+str(y)+" > "+str(nousLocks)+"/"+str(euxLocks))
 
 				if (euxLocks > nousLocks):
 					eux = eux + conteneurs[y][x]
@@ -148,4 +270,4 @@ print("")
 print("")
 print("")
 
-#print(lock.nbLocks([[-1,1],[-1,1]],1))
+#print(lock.nbLocks([[0,1],[0,0]],1))
