@@ -24,19 +24,19 @@ class Interpretation:
             elif(num == '10'):
                 print(self.tablier)
                 print(self.tablock)
-                try:
-                    coord = IA(self.tablier, self.tablock).getCoordBestLock()
-                    print(coord)
-                    self.majLock(coord[0],coord[1], 1)
-                    print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
-                    return self.cord2Shit(coord[0],coord[1])
-                except IndexError:
+                #try:
+                coord = IA(self.tablier, self.tablock).getCoordBestLock()
+                print(coord)
+                self.majLock(coord[0],coord[1], 1)
+                print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
+                return self.cord2Shit(coord[0],coord[1])
+                '''except IndexError:
                     coord0 = random.randint(0, len(self.tablock))
                     coord1 = random.randint(0, len(self.tablock))
                     print(coord0)
                     print(coord1)
                     self.majLock(coord0,coord1, 1)
-                    return self.cord2Shit(coord0,coord1)
+                    return self.cord2Shit(coord0,coord1)'''
             elif(num == '20'):
                 shit = mess.split(":")[2]
                 coord = self.shit2Cord(shit)

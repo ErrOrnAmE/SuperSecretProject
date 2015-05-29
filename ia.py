@@ -33,13 +33,16 @@ class IA(object):
                     
 
 	def getCoordBestLock(self):
+
+		print("---->"+str(self.tablock[5][1]))
 		maxLock = None
-		for y in range(len(self.tablock)):
-			for x in range(len(self.tablock[y])):
+		for y in range(len(self.tablock)-1):
+			for x in range(len(self.tablock[y])-1):
 				lock = Lock(self.tablier,self.tablock,x,y)
 				if (lock.diff != None and (maxLock == None or lock.diff > maxLock.diff) ):
 					maxLock = lock
 
+		print("--"+str(maxLock.x)+"/"+str(maxLock.y))
 		return (maxLock.x,maxLock.y)
 
 
@@ -54,7 +57,9 @@ class Lock(object):
 		largeur = len(tablier[0])
 		hauteur = len(tablier)
 
-		if (tablock[y][x] != 0):
+		print(str(x)+"/"+str(y))
+
+		if (tablock[x][y] != 0):
 			self.diff = None
 			#print("Indisponible")
 			return
