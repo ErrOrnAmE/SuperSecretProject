@@ -1,7 +1,7 @@
 import socket, interpretation
  
-UDP_IP = "172.30.10.20"
-UDP_PORT = 9004
+UDP_IP = "172.30.7.16"
+UDP_PORT = 10006
 MESSAGE = (b"WeLeakedGot")
 
 print ("UDP target IP:", UDP_IP)
