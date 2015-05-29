@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-tablier = [[6,42,62,43,3,14,56,13],
+'''tablier = [[6,42,62,43,3,14,56,13],
 			[6,42,62,43,3,14,56,13],
 			[6,42,62,43,3,14,56,13],
 			[6,42,62,43,3,14,56,13],
@@ -18,7 +18,7 @@ tablock = [[0,1,0,0,0-1,0,0,0],
 			[0,0,0,0,1,-1,0,0,0],
 			[0,1,-1,0,0,0,0,0,0],
 			[0,0,0,1,0,-1,0,0,0],
-			[0,0,0,1,0,-1,0,0,0]]
+			[0,0,0,1,0,-1,0,0,0]]'''
 
 #largeur = len(tablier[0])
 #hauteur = len(tablier)
@@ -169,6 +169,7 @@ class Lock(object):
 		elif (y == 0):
 
 			print("en haut")
+			print("x: "+x+" y: "+y)
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
@@ -298,4 +299,4 @@ class Lock(object):
 
 
 #Pour récupérer les coordonnées à jouer:
-print(IA(tablier,tablock).getCoordBestLock())
+#print(IA(tablier,tablock).getCoordBestLock())
