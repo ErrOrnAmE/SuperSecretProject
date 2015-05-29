@@ -1,9 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#tablier = [[6,42,62],[44,10,23],[69,21,43]]
+tablier = [[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13],
+			[6,42,62,43,3,14,56,13]]
 
-#tablock = [[-1,0,1,0],[0,1,0,-1],[1,-1,0,0],[0,0,1,-1]]
+tablock = [[0,1,0,0,0-1,0,0,0],
+			[0,0,0,0,1,-1,0,0,0],
+			[0,1,-1,0,0,0,0,0,0],
+			[0,0,0,1,0,-1,0,0,0],
+			[0,1,0,0,0-1,0,0,0],
+			[0,0,0,0,1,-1,0,0,0],
+			[0,1,-1,0,0,0,0,0,0],
+			[0,0,0,1,0,-1,0,0,0],
+			[0,0,0,1,0,-1,0,0,0]]
 
 #largeur = len(tablier[0])
 #hauteur = len(tablier)
@@ -144,7 +159,7 @@ class Lock(object):
 			#print(self.nbPointsLock(c,minilocks))
 			avant = self.nbPointsLock(c,minilocks)
 
-			minilocks[y][x] = 1
+			minilocks[1][0] = 1
 
 			#print(self.nbPointsLock(c,minilocks))
 			apres = self.nbPointsLock(c,minilocks)
@@ -153,7 +168,7 @@ class Lock(object):
 
 		elif (y == 0):
 
-			#print("en haut")
+			print("en haut")
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
@@ -163,7 +178,7 @@ class Lock(object):
 
 			avant = self.nbPointsLock(c,minilocks)
 
-			minilocks[y][x] = 1
+			minilocks[0][1] = 1
 
 			apres = self.nbPointsLock(c,minilocks)
 
@@ -214,7 +229,7 @@ class Lock(object):
 
 			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
 
-		#print(str(x)+":"+str(y)+" > "+str(self.diff))
+		print(str(x)+":"+str(y)+" > "+str(self.diff))
 
 	def nbPointsLock(self,conteneurs,locks):
 		nous = 0
@@ -283,4 +298,4 @@ class Lock(object):
 
 
 #Pour récupérer les coordonnées à jouer:
-#print(IA(tablier,tablock).getCoordBestLock())
+print(IA(tablier,tablock).getCoordBestLock())
