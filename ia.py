@@ -1,24 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''tablier = [[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13],
-			[6,42,62,43,3,14,56,13]]
+#tablier = [[30, 13, 52, 8], [18, 17, 39, 48], [49, 34, 32, 47], [35, 32, 27, 8], [21, 46, 10, 36], [31, 5, 44, 33], [5, 16, 43, 13]]
 
-tablock = [[0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,1,-1,0,0,0],
-			[0,1,-1,0,0,0,0,0,0],
-			[0,0,0,1,0,-1,0,0,0],
-			[0,1,0,0,0-1,0,0,0],
-			[0,0,0,0,1,-1,0,0,0],
-			[0,1,-1,0,0,0,0,0,0],
-			[0,0,0,1,0,-1,0,0,0],
-			[0,0,0,1,0,-1,0,0,0]]'''
+#tablock = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
 #largeur = len(tablier[0])
 #hauteur = len(tablier)
@@ -30,6 +15,10 @@ class IA(object):
 		self.tablock = tablock
 		self.largeur = len(tablier[0])
 		self.hauteur = len(tablier)
+
+		print(self.largeur)
+		print(self.hauteur)
+		print()
                     
 
 	def getCoordBestLock(self):
@@ -57,9 +46,7 @@ class Lock(object):
 		largeur = len(tablier[0])
 		hauteur = len(tablier)
 
-		print(str(x)+"/"+str(y))
-
-		if (tablock[x][y] != 0):
+		if (tablock[y][x] != 0):
 			self.diff = None
 			#print("Indisponible")
 			return
@@ -174,8 +161,8 @@ class Lock(object):
 
 		elif (y == 0):
 
-			print("en haut")
-			print("x: "+str(x)+" y: "+str(y))
+			#print("en haut")
+			#print("x: "+str(x)+" y: "+str(y))
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
