@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-tablier = [[1,2,3],[4,5,6],[7,8,9]]
+#tablier = [[6,42,62],[44,10,23],[69,21,43]]
 
-tablock = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+#tablock = [[-1,0,1,0],[0,1,0,-1],[1,-1,0,0],[0,0,1,-1]]
 
-largeur = len(tablier[0])
-hauteur = len(tablier)
+#largeur = len(tablier[0])
+#hauteur = len(tablier)
 
 class IA(object):
 
 	def __init__(self,tablier,tablock):
-		self.tablier = tablier;
-		self.tablock = tablock;
+		self.tablier = tablier
+		self.tablock = tablock
+		self.largeur = len(tablier[0])
+		self.hauteur = len(tablier)
 
 	def getCoordBestLock(self):
 		maxLock = None
@@ -33,6 +35,8 @@ class Lock(object):
 
 		self.x = x
 		self.y = y
+		largeur = len(tablier[0])
+		hauteur = len(tablier)
 
 		if (tablock[y][x] != 0):
 			self.diff = None
