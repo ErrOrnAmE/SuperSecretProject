@@ -3,7 +3,7 @@
 
 tablier = [[1,2,3],[4,5,6],[7,8,9]]
 
-tablock = [[0,0,0,0],[0,0,0,0],[1,0,1,0],[-1,0,0,0]]
+tablock = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 largeur = len(tablier[0])
 hauteur = len(tablier)
@@ -14,8 +14,15 @@ class IA(object):
 		self.tablier = tablier;
 		self.tablock = tablock;
 
-	def createMap(self):
-		self.lock = Lock(self.tablier,self.tablock,1,3)
+	def getCoordBestLock(self):
+		maxLock = None
+		for y in range(len(self.tablock)):
+			for x in range(len(self.tablock[y])):
+				lock = Lock(self.tablier,self.tablock,x,y)
+				if (lock.diff != None and (maxLock == None or lock.diff > maxLock.diff) ):
+					maxLock = lock
+
+		return (maxLock.x,maxLock.y)
 
 
 
@@ -29,12 +36,12 @@ class Lock(object):
 
 		if (tablock[y][x] != 0):
 			self.diff = None
-			print("Indisponible")
+			#print("Indisponible")
 			return
 
 		if (x > 0 and y > 0 and x < largeur and y < hauteur):
 
-			print("au milieu")
+			#print("au milieu")
 
 			conteneurs = tablier[y-1:y+1]
 			for index in range(len(conteneurs)):
@@ -54,13 +61,13 @@ class Lock(object):
 
 		elif (x == 0 and y == 0):
 
-			print("en haut à gauche")
+			#print("en haut à gauche")
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
 				minilocks[index] = minilocks[index][0:2]
 
-			print(minilocks)
+			#print(minilocks)
 
 			euxLocks = self.nbLocks(minilocks,-1)
 			nousLocks = self.nbLocks(minilocks,1)
@@ -72,13 +79,13 @@ class Lock(object):
 
 		elif (x == largeur and y == 0):
 
-			print ("en haut à droite")
+			#print ("en haut à droite")
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
 				minilocks[index] = minilocks[index][x-1:]
 
-			print(minilocks)
+			#print(minilocks)
 
 			euxLocks = self.nbLocks(minilocks,-1)
 			nousLocks = self.nbLocks(minilocks,1)
@@ -90,7 +97,7 @@ class Lock(object):
 
 		elif (x == 0 and y == hauteur):
 
-			print ("en bas à gauche")
+			#print ("en bas à gauche")
 
 			minilocks = tablock[y-1:]
 			for index in range(len(minilocks)):
@@ -106,7 +113,7 @@ class Lock(object):
 
 		elif (x == largeur and y == hauteur):
 
-			print ("en bas à droite")
+			#print ("en bas à droite")
 
 			minilocks = tablock[y-1:]
 			for index in range(len(minilocks)):
@@ -122,7 +129,7 @@ class Lock(object):
 
 		elif (x == 0):
 
-			print("à gauche")
+			#print("à gauche")
 
 			minilocks = tablock[y-1:y+2]
 			for index in range(len(minilocks)):
@@ -142,7 +149,7 @@ class Lock(object):
 
 		elif (y == 0):
 
-			print("en haut")
+			#print("en haut")
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
@@ -160,7 +167,7 @@ class Lock(object):
 
 		elif (x == largeur):
 
-			print("à droite")
+			#print("à droite")
 
 			minilocks = tablock[y-1:y+2]
 			for index in range(len(minilocks)):
@@ -180,7 +187,7 @@ class Lock(object):
 
 		elif (y == hauteur):
 
-			print("en bas")
+			#print("en bas")
 
 			minilocks = tablock[y-1:]
 			for index in range(len(minilocks)):
@@ -203,7 +210,7 @@ class Lock(object):
 
 			self.diff = (apres[0]-avant[0])-(apres[1]-avant[1])
 
-		print(str(x)+":"+str(y)+" > "+str(self.diff))
+		#print(str(x)+":"+str(y)+" > "+str(self.diff))
 
 	def nbPointsLock(self,conteneurs,locks):
 		nous = 0
@@ -261,13 +268,15 @@ class Lock(object):
 		
 
 
-ia = IA(tablier,tablock)
-ia.createMap()
+#ia = IA(tablier,tablock)
 
 #lock = Lock(tablier,tablock,1,1)
 
-print("")
-print("")
-print("")
+#print(ia.getCoordBestLock())
 
 #print(lock.nbLocks([[0,1],[0,0]],1))
+
+
+
+#Pour récupérer les coordonnées à jouer:
+#print(IA(tablier,tablock).getCoordBestLock())
