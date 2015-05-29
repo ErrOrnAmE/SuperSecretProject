@@ -1,4 +1,5 @@
 from ia import IA
+import random
 
 class Interpretation:
     """
@@ -29,11 +30,15 @@ class Interpretation:
                     self.majLock(coord[0],coord[1], 1)
                     print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
                     return self.cord2Shit(coord[0],coord[1])
-                except Error:
-                    return (0,0)
+                except IndexError:
+                    coord0 = random.randint(0, len(self.tablock))
+                    coord1 = random.randint(0, len(self.tablock))
+                    self.majLock(coord0,coord1, 1)
+                    return self.cord2Shit(coord0,coord1)
             elif(num == '20'):
                 shit = mess.split(":")[2]
                 coord = self.shit2Cord(shit)
+                print(coord)
                 self.majLock(coord[0],coord[1], -1)
             elif(num == '88'):
                 res = msg.split(" ")[4] 
@@ -50,11 +55,11 @@ class Interpretation:
     def shit2Cord(self,string): 
         taille = len(string) 
         if taille==3: 
-            x = (int) (string[0])-1 
+            x = (int) (string[0]) 
             y = ord(string[1]) - 65
             coté = (int) (string[2]) 
         elif taille==4: 
-            x = int (string[0]+string[1])-1 
+            x = int (string[0]+string[1]) 
             y = ord(string[2]) -65
             coté = (int) (string[3]) 
         if coté ==1: 
@@ -98,4 +103,4 @@ class Interpretation:
         
 
     def majLock(self,x,y,who): 
-        self.tablock[y][x] = who
+        self.tablock[x][y] = who
