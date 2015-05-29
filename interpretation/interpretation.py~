@@ -1,4 +1,0 @@
-class Interpretation:
-
-    def __init__(self):
-        
