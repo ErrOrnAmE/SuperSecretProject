@@ -21,8 +21,14 @@ class Interpretation:
             if(num == 'MA'):
                 self.generateTablier(mess.split("=")[1])
             elif(num == '10'):
+                print(self.tablier)
+                print(self.tablock)
+                #try:
                 coord = IA(self.tablier, self.tablock).getCoordBestLock()
+                print("-> I retourne {}".format(self.cord2Shit(coord)))
                 return self.cord2Shit(coord)
+                #except Error:
+                #return (0,0)
             elif(num == '20'):
                 shit = mess.split(":")[2]
                 coord = self.shit2Cord(shit)
@@ -30,9 +36,13 @@ class Interpretation:
             elif(num == '88'):
                 res = msg.split(" ")[4] 
                 if res == ("gagné"): 
+                    print("-> I retourne win")
                     return "win" 
                 else:
+                    print("-> I retourne lose")
                     return "lose"
+            elif(num == '91'):
+                return "stop"
         return ""
 
     def shit2Cord(self,string): 
@@ -74,7 +84,10 @@ class Interpretation:
         cbLigne = len(lineArray)+1
         cbColonne = len(lineArray[0].split(":"))+1
         for line  in lineArray:
-            self.tablier.append(line.split(":"))
+            caca=line.split(":")
+            for index in range(len(caca)):
+                caca[index] = (int)(caca[index])
+            self.tablier.append(caca)
         for x in range(0,cbColonne):
             foo = []
             for y in range(0,cbLigne):
