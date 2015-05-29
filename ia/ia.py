@@ -30,9 +30,9 @@ class Lock(object):
 
 		#print(conteneurs)
 
-		#avant = self.nbPointsLock(conteneurs,locks)
+		avant = self.nbPointsLock(conteneurs,locks)
 		locks[1][1] = 1
-		print(locks)
+		#print(locks)
 		apres = self.nbPointsLock(conteneurs,locks)
 
 	def nbPointsLock(self,conteneurs,locks):
@@ -40,21 +40,17 @@ class Lock(object):
 		eux = 0
 		for x in range(len(conteneurs)):
 			for y in range(len(conteneurs[x])):
-				minilocks = tablock[x:x+2]
-				print(minilocks)
-				'''for index in range(len(minilocks)):
+				minilocks = locks[x:x+2]
+				for index in range(len(minilocks)):
 					minilocks[index] = minilocks[index][y:y+2]
 
 				euxLocks = self.nbLocks(minilocks,-1)
 				nousLocks = self.nbLocks(minilocks,1)
 
-				print(minilocks)
-				print("eux: "+str(euxLocks)+" nous: "+str(nousLocks))
-
 				if (euxLocks > nousLocks):
 					eux = eux + conteneurs[x][y]
 				elif (nousLocks > euxLocks):
-					nous = nous + conteneurs[x][y]'''
+					nous = nous + conteneurs[x][y]
 
 		print("score:")
 		print(nous)
