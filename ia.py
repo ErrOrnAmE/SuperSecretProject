@@ -30,7 +30,7 @@ class IA(object):
 		self.tablock = tablock
 		self.largeur = len(tablier[0])
 		self.hauteur = len(tablier)
-		print(tablier[846584864])
+                    
 
 	def getCoordBestLock(self):
 		maxLock = None

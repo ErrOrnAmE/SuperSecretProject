@@ -33,6 +33,8 @@ class Interpretation:
                 except IndexError:
                     coord0 = random.randint(0, len(self.tablock))
                     coord1 = random.randint(0, len(self.tablock))
+                    print(coord0)
+                    print(coord1)
                     self.majLock(coord0,coord1, 1)
                     return self.cord2Shit(coord0,coord1)
             elif(num == '20'):
