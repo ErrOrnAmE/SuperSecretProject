@@ -24,19 +24,20 @@ class Interpretation:
             elif(num == '10'):
                 print(self.tablier)
                 print(self.tablock)
-                #try:
-                coord = IA(self.tablier, self.tablock).getCoordBestLock()
-                print(coord)
-                self.majLock(coord[0],coord[1], 1)
-                print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
-                return self.cord2Shit(coord[0],coord[1])
-                '''except IndexError:
-                    coord0 = random.randint(0, len(self.tablock))
-                    coord1 = random.randint(0, len(self.tablock))
+                try:
+                    coord = IA(self.tablier, self.tablock).getCoordBestLock()
+                    print(coord)
+                    self.majLock(coord[0],coord[1], 1)
+                    print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
+                    return self.cord2Shit(coord[0],coord[1])
+                except IndexError:
+                    coords = self.firstFree()
+                    coord0 = coords[0]
+                    coord1 = coords[1]
                     print(coord0)
                     print(coord1)
                     self.majLock(coord0,coord1, 1)
-                    return self.cord2Shit(coord0,coord1)'''
+                    return self.cord2Shit(coord0,coord1)
             elif(num == '20'):
                 shit = mess.split(":")[2]
                 coord = self.shit2Cord(shit)
@@ -53,6 +54,12 @@ class Interpretation:
             elif(num == '91'):
                 return "stop"
         return ""
+
+    def firstFree(self):
+        for x in range(len(self.tablock)-1):
+            for y in range(len(self.tablock[x])-1):
+                if(self.tablock[x][y] == 0):
+                    return (x,y)
 
     def shit2Cord(self,string): 
         taille = len(string) 
