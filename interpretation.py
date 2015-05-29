@@ -71,8 +71,8 @@ class Interpretation:
         if msg[len(msg)-1] == "|":
             msg = msg[:len(msg)-1]
         lineArray = msg.split("|")
-        cbLigne = len(lineArray)
-        cbColonne = len(lineArray[0].split(":"))
+        cbLigne = len(lineArray)+1
+        cbColonne = len(lineArray[0].split(":"))+1
         for line  in lineArray:
             self.tablier.append(line.split(":"))
         for x in range(0,cbColonne):

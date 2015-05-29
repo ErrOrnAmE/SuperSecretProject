@@ -10,7 +10,7 @@
 			[6,42,62,43,3,14,56,13],
 			[6,42,62,43,3,14,56,13]]
 
-tablock = [[0,1,0,0,0-1,0,0,0],
+tablock = [[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,1,-1,0,0,0],
 			[0,1,-1,0,0,0,0,0,0],
 			[0,0,0,1,0,-1,0,0,0],
@@ -169,7 +169,7 @@ class Lock(object):
 		elif (y == 0):
 
 			print("en haut")
-			print("x: "+x+" y: "+y)
+			print("x: "+str(x)+" y: "+str(y))
 
 			minilocks = tablock[0:2]
 			for index in range(len(minilocks)):
