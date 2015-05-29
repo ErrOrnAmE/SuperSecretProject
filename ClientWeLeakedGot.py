@@ -19,9 +19,7 @@ while True:
     message = data.decode()    
     reponse = interprete.routeur(message)
     print ("-> ",reponse)
-    if reponse != "":
-        sock.sendto(reponse, (UDP_IP, UDP_PORT))
-    elif reponse == "win":
+    if reponse == "win":
         print ("On a perdu ! :(")
         sock.close()
         exit()
@@ -29,6 +27,8 @@ while True:
         print ("On a gagne ! :)")
         sock.close()
         exit()
-    elif response == "stop":
-        close()
+    elif reponse == "stop":
+        sock.close()
         exit()
+    elif reponse != "":
+        sock.sendto(reponse.encode(), (UDP_IP, UDP_PORT))

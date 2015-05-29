@@ -23,16 +23,18 @@ class Interpretation:
             elif(num == '10'):
                 print(self.tablier)
                 print(self.tablock)
-                #try:
-                coord = IA(self.tablier, self.tablock).getCoordBestLock()
-                print("-> I retourne {}".format(self.cord2Shit(coord)))
-                return self.cord2Shit(coord)
-                #except Error:
-                #return (0,0)
+                try:
+                    coord = IA(self.tablier, self.tablock).getCoordBestLock()
+                    print(coord)
+                    self.majLock(coord[0],coord[1], 1)
+                    print("-> I retourne {}".format(self.cord2Shit(coord[0],coord[1])))
+                    return self.cord2Shit(coord[0],coord[1])
+                except Error:
+                    return (0,0)
             elif(num == '20'):
                 shit = mess.split(":")[2]
                 coord = self.shit2Cord(shit)
-                self.majLock(coord[0],coord[1], 1)
+                self.majLock(coord[0],coord[1], -1)
             elif(num == '88'):
                 res = msg.split(" ")[4] 
                 if res == ("gagné"): 
@@ -40,7 +42,7 @@ class Interpretation:
                     return "win" 
                 else:
                     print("-> I retourne lose")
-                    return "lose"
+                    return "loose"
             elif(num == '91'):
                 return "stop"
         return ""
@@ -56,25 +58,25 @@ class Interpretation:
             y = ord(string[2]) -65
             coté = (int) (string[3]) 
         if coté ==1: 
-            return (x,y) 
+            return (x-1,y) 
         elif coté == 2: 
-            return (x+1,y) 
+            return (x,y) 
         elif coté == 3: 
-            return (x+1,y+1) 
+            return (x,y+1) 
         elif coté == 4: 
-            return (x,y+1)
+            return (x-1,y+1)
 
     def cord2Shit(self,x,y): 
         longeur = len (self.tablock) 
         largeur = len (self.tablock[0]) 
         if y < longeur and x < largeur: 
-            return str(x)+chr(y+65)+"1" 
+            return str(x+1)+chr(y+65)+"1" 
         elif y== longeur and x == largeur: 
-            return str(x-1)+chr((y-1)+65)+"3" 
+            return str(x)+chr((y-1)+65)+"3" 
         elif y == longeur: 
-            return str(x)+chr((y-1)+65)+"4" 
+            return str(x+1)+chr((y-1)+65)+"4" 
         elif x== largeur: 
-            return str(x-1)+chr((y)+65)+"2"
+            return str(x)+chr((y)+65)+"2"
 
 
     def generateTablier(self, msg):
@@ -88,12 +90,12 @@ class Interpretation:
             for index in range(len(caca)):
                 caca[index] = (int)(caca[index])
             self.tablier.append(caca)
-        for x in range(0,cbColonne):
+        for x in range(0,cbLigne):
             foo = []
-            for y in range(0,cbLigne):
+            for y in range(0,cbColonne):
                 foo.append(0)
             self.tablock.append(foo)
         
 
-    def majLock(x,y,who): 
-        self.tablock[x][y] = who
+    def majLock(self,x,y,who): 
+        self.tablock[y][x] = who
